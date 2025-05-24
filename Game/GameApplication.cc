@@ -8,27 +8,27 @@
 #include <string>
 #include <thread>
 
-const int COMMON_FLAGS
+const int32_t commonFlags
     = ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse;
 
 bool NumButton(uint8_t n) {
     if (n == 0) {
-        ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.f, 0.f, 0.f, 0.f));
-        ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.f, 0.f, 0.f, 0.f));
-        ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0.f, 0.f, 0.f, 0.f));
+        ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.F, 0.F, 0.F, 0.F));
+        ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.F, 0.F, 0.F, 0.F));
+        ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0.F, 0.F, 0.F, 0.F));
     }
 
-    auto str_n = std::to_string(n);
-    auto r = ImGui::Button(n == 0 ? "" : str_n.c_str(), ImVec2(50, 50));
+    auto strN = std::to_string(n);
+    auto result = ImGui::Button(n == 0 ? "" : strN.c_str(), ImVec2(50, 50));
 
     if (n == 0) {
         ImGui::PopStyleColor(3);
     }
 
-    return r;
+    return result;
 }
 
-void GameApplication::update(float dt) {
+void GameApplication::update(float /*dt*/) {
     if (_state == GameState::FINISHED || _state == GameState::NONE) {
         return;
     }
@@ -53,21 +53,21 @@ bool GameApplication::initialize() {
     style.ItemSpacing = ImVec2(5, 5);
     style.WindowPadding = ImVec2(10, 10);
     style.FramePadding = ImVec2(5, 5);
-    style.WindowRounding = 10.f;
-    style.FrameRounding = 5.f;
-    style.Colors[ImGuiCol_Button] = ImVec4(0.2f, 0.2f, 0.2f, 1.0f);
-    style.Colors[ImGuiCol_ButtonHovered] = ImVec4(0.3f, 0.3f, 0.3f, 1.0f);
-    style.Colors[ImGuiCol_ButtonActive] = ImVec4(0.4f, 0.4f, 0.4f, 1.0f);
+    style.WindowRounding = 10.F;
+    style.FrameRounding = 5.F;
+    style.Colors[ImGuiCol_Button] = ImVec4(0.2F, 0.2F, 0.2F, 1.0F);
+    style.Colors[ImGuiCol_ButtonHovered] = ImVec4(0.3F, 0.3F, 0.3F, 1.0F);
+    style.Colors[ImGuiCol_ButtonActive] = ImVec4(0.4F, 0.4F, 0.4F, 1.0F);
 
 #if defined(__APPLE__)
-    auto fontPath = "/System/Library/Fonts/SFNS.ttf";
+    const auto* fontPath = "/System/Library/Fonts/SFNS.ttf";
 #elif defined(_WIN32)
-    auto fontPath = "C:\\Windows\\Fonts\\Arial.ttf";
+    const auto* fontPath = "C:\\Windows\\Fonts\\Arial.ttf";
 #else
-    auto fontPath = "";
+    const auto* fontPath = "";
 #endif
 
-    auto font = io.Fonts->AddFontFromFileTTF(fontPath, 16.0f);
+    auto* font = io.Fonts->AddFontFromFileTTF(fontPath, 16.F);
     if (font == nullptr) {
         spdlog::error("Unable to load font, using default");
     } else {
@@ -81,10 +81,10 @@ void GameApplication::renderGame() {
     ImGui::SetNextWindowPos(ImVec2(10, 10));
     ImGui::SetNextWindowSize(ImVec2(235, 235));
 
-    ImGui::Begin("Game", nullptr, COMMON_FLAGS);
+    ImGui::Begin("Game", nullptr, commonFlags);
 
     {
-        for (int i = 0; i < _game.size(); ++i) {
+        for (int32_t i = 0; i < _game.size(); ++i) {
             if (NumButton(_game.get(i)) && _state == GameState::PLAYING) {
                 _game.move(i);
             }
@@ -102,7 +102,7 @@ void GameApplication::renderInfo() {
     ImGui::SetNextWindowPos(ImVec2(255, 10));
     ImGui::SetNextWindowSize(ImVec2(235, 135));
 
-    ImGui::Begin("Info", nullptr, COMMON_FLAGS);
+    ImGui::Begin("Info", nullptr, commonFlags);
     {
         if (ImGui::Button("New game")) {
             _game.shuffle();
@@ -130,8 +130,8 @@ void GameApplication::renderInfo() {
             }
         }
 
-        if (_error.size() > 0) {
-            ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.f, 0.f, 0.f, 1.f));
+        if (!_error.empty()) {
+            ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.F, 0.F, 0.F, 1.F));
             ImGui::Text("%s", _error.data());
             ImGui::PopStyleColor();
 
@@ -144,7 +144,7 @@ void GameApplication::renderInfo() {
         if (_state == GameState::PLAYING || _state == GameState::SOLVING || _state == GameState::SOLVER
             || _state == GameState::FINISHED) {
             if (!_game.isSolvable()) {
-                ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.f, 0.f, 0.f, 1.f));
+                ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.F, 0.F, 0.F, 1.F));
                 ImGui::Text("Game is not solvable!");
                 ImGui::PopStyleColor();
             }
@@ -153,7 +153,7 @@ void GameApplication::renderInfo() {
             ImGui::Text("Moves: %d", _moves);
 
             if (_state == GameState::FINISHED) {
-                ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.f, 1.f, 0.f, 1.f));
+                ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.F, 1.F, 0.F, 1.F));
             }
 
             ImGui::Text("Elapsed: %llus", _elapsedTime.count());
@@ -170,7 +170,7 @@ void GameApplication::renderSolver() {
     ImGui::SetNextWindowPos(ImVec2(255, 155));
     ImGui::SetNextWindowSize(ImVec2(235, 90));
 
-    ImGui::Begin("Solver", nullptr, COMMON_FLAGS);
+    ImGui::Begin("Solver", nullptr, commonFlags);
     {
         if (_state == GameState::PLAYING) {
             if (ImGui::Button("Solve")) {
@@ -195,7 +195,7 @@ void GameApplication::renderSolver() {
             }
 
             ImGui::SameLine();
-            ImGui::Text("Elapsed: %.2fs", _solver.elapsed().count() / 1000.f);
+            ImGui::Text("Elapsed: %.2fs", _solver.elapsed().count() / 1000.F);
 
             if (ImGui::Button("Prev")) {
                 if (_solverStep > 0) {
@@ -219,7 +219,7 @@ void GameApplication::renderSolver() {
     ImGui::End();
 }
 
-void GameApplication::renderScene(float dt) {
+void GameApplication::renderScene(float /*dt*/) {
     renderGame();
     renderInfo();
     renderSolver();
@@ -261,7 +261,7 @@ void GameApplication::keyPressed(int32_t key, int32_t action) {
 void GameApplication::saveState() {
     std::ofstream file("game_state.txt");
     if (file.is_open()) {
-        for (int i = 0; i < _game.size(); ++i) {
+        for (int32_t i = 0; i < _game.size(); ++i) {
             file << _game.get(i) << " ";
         }
         file << "\n" << _moves << "\n";
@@ -279,13 +279,14 @@ void GameApplication::saveState() {
 
 void GameApplication::loadState() {
     std::ifstream file("game_state.txt");
+
     if (file.is_open()) {
         _game = Game();
-        for (int i = 0; i < _game.size(); ++i) {
-            int value = -1;
+        for (int32_t i = 0; i < _game.size(); ++i) {
+            int32_t value = -1;
             file >> value;
 
-            if (value < 0 || value > _game.size()) {
+            if (value < 0 || value > _game.size() - 1) {
                 spdlog::error("Invalid value {} at index {}", value, i);
                 file.close();
                 _game.reset();
@@ -296,7 +297,7 @@ void GameApplication::loadState() {
             _game.set(i, value);
         }
 
-        int moves = -1;
+        int32_t moves = -1;
         file >> moves;
         if (moves < 0) {
             spdlog::error("Invalid moves count {}", moves);
@@ -308,7 +309,7 @@ void GameApplication::loadState() {
         _moves = moves;
         _state = GameState::PLAYING;
 
-        int elapsedSeconds = -1;
+        int32_t elapsedSeconds = -1;
         file >> elapsedSeconds;
 
         if (elapsedSeconds < 0) {

@@ -24,11 +24,14 @@ private:
     void loadState();
 
     Game _game;
-    unsigned int _moves;
+    uint32_t _moves;
     std::chrono::time_point<std::chrono::steady_clock> _startTime;
     std::chrono::seconds _elapsedTime;
     Solver _solver;
-    unsigned int _solverStep {0};
+    uint32_t _solverStep {0};
     GameState _state {GameState::NONE};
     std::string_view _error {};
+
+public:
+    virtual ~GameApplication() = default;
 };

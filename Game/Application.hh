@@ -12,6 +12,8 @@ public:
         _width(width),
         _height(height) {};
 
+    virtual ~Application() = default;
+
     void run();
 
 protected:

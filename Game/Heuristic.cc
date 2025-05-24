@@ -2,8 +2,8 @@
 #include "Game.hh"
 #include <cmath>
 
-unsigned int ManhattanDistance::solve(const Game& game) const {
-    unsigned int distance {0};
+uint32_t ManhattanDistance::solve(const Game& game) const {
+    uint32_t distance = 0;
 
     int dimension = game.dimension();
 

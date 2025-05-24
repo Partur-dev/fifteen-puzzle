@@ -1,18 +1,26 @@
 #include "Solver.hh"
 
-int Solver::search(std::deque<Game>& path, int moveCost, int threshold, const Heuristic& heuristic) {
+uint32_t Solver::search(
+    std::deque<Game>& path,
+    int32_t moveCost,
+    int32_t threshold,
+    const Heuristic& heuristic,
+    float weight
+) {
     const Game& state = *path.rbegin();
 
-    unsigned int h = heuristic.solve(state);
+    uint32_t h = heuristic.solve(state);
 
-    if (h == 0)
+    if (h == 0) {
         return 0;
+    }
 
-    unsigned int cost = moveCost + h;
-    if (cost > threshold)
+    uint32_t cost = moveCost + h * weight;
+    if (cost > threshold) {
         return cost;
+    }
 
-    unsigned int min = std::numeric_limits<unsigned int>::max();
+    uint32_t min = std::numeric_limits<uint32_t>::max();
 
     for (Move& nextMove : state.validMoves()) {
         Game nextState {state};
@@ -21,11 +29,14 @@ int Solver::search(std::deque<Game>& path, int moveCost, int threshold, const He
         if (std::find(path.begin(), path.end(), nextState) == path.end()) {
             path.push_back(std::move(nextState));
 
-            unsigned int temp = search(path, moveCost + 1, threshold, heuristic);
-            if (temp == 0)
+            uint32_t temp = search(path, moveCost + 1, threshold, heuristic, weight);
+            if (temp == 0) {
                 return 0;
-            if (temp < min)
+            }
+
+            if (temp < min) {
                 min = temp;
+            }
 
             path.pop_back();
         }
@@ -46,13 +57,14 @@ void Solver::solve(const Heuristic& heuristic) {
     std::deque<Game> path;
     path.push_back(_game);
 
-    unsigned int threshold = heuristic.solve(_game);
+    uint32_t threshold = heuristic.solve(_game);
 
-    unsigned int result = -1;
+    float weight = 1.5F;
+    uint32_t result = -1;
     while (result != 0) {
-        result = search(path, 0, threshold, heuristic);
+        result = search(path, 0, threshold, heuristic, weight);
 
-        if (result == std::numeric_limits<unsigned int>::max()) {
+        if (result == std::numeric_limits<uint32_t>::max()) {
             _result = SolverResult::NO_SOLUTION_FOUND;
             return;
         }

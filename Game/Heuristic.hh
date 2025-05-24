@@ -1,14 +1,15 @@
 #pragma once
 
+#include <cstdint>
 class Game;
 
 class Heuristic {
 public:
-    virtual unsigned int solve(const Game& game) const = 0;
+    virtual uint32_t solve(const Game& game) const = 0;
     virtual ~Heuristic() = default;
 };
 
 class ManhattanDistance : public Heuristic {
 public:
-    unsigned int solve(const Game& game) const;
+    uint32_t solve(const Game& game) const;
 };

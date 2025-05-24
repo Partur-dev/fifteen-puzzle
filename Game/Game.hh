@@ -19,14 +19,14 @@ public:
     bool move(Move move);
     bool move(int);
 
-    const int& get(int index) const;
-    const int& get(int row, int col) const;
-    int& get(int index);
-    int& get(int row, int col);
-    void set(int index, int value);
-    void set(int row, int col, int value);
+    const int& get(int32_t index) const;
+    const int& get(int32_t row, int32_t col) const;
+    int& get(int32_t index);
+    int& get(int32_t row, int32_t col);
+    void set(int32_t index, int32_t value);
+    void set(int32_t row, int32_t col, int32_t value);
 
-    int inversionCount() const;
+    int32_t inversionCount() const;
 
     bool isSolvable() const;
     bool isSolved() const;
@@ -35,14 +35,14 @@ public:
     void shuffle();
     void reset();
 
-    int dimension() const;
-    int size() const;
+    int32_t dimension() const;
+    int32_t size() const;
 
     Board& board();
 
 private:
-    int _blankRow {};
-    int _blankCol {};
-    int _dimension {};
+    int32_t _blankRow {};
+    int32_t _blankCol {};
+    int32_t _dimension {};
     Board _board {};
 };

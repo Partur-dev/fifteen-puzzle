@@ -35,7 +35,13 @@ public:
     }
 
 private:
-    int search(std::deque<Game>& path, int moveCost, int threshold, const Heuristic& heuristic);
+    uint32_t search(
+        std::deque<Game>& path,
+        int32_t moveCost,
+        int32_t threshold,
+        const Heuristic& heuristic,
+        float weight
+    );
 
     SolverResult _result;
     bool _solved {false};

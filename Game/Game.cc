@@ -81,7 +81,7 @@ bool Game::move(Move move) {
     }
 }
 
-bool Game::move(int index) {
+bool Game::move(int32_t index) {
     if (index < 0 || index >= size())
         return false;
 
@@ -103,23 +103,23 @@ bool Game::move(int index) {
     return true;
 }
 
-const int& Game::get(int index) const {
+const int& Game::get(int32_t index) const {
     return _board[index];
 }
 
-const int& Game::get(int row, int col) const {
+const int& Game::get(int32_t row, int32_t col) const {
     return _board[row * _dimension + col];
 }
 
-int& Game::get(int index) {
+int& Game::get(int32_t index) {
     return _board[index];
 }
 
-int& Game::get(int row, int col) {
+int& Game::get(int32_t row, int32_t col) {
     return _board[row * _dimension + col];
 }
 
-void Game::set(int index, int value) {
+void Game::set(int32_t index, int32_t value) {
     if (index < 0 || index >= size())
         return;
 
@@ -131,11 +131,11 @@ void Game::set(int index, int value) {
     _board[index] = value;
 }
 
-int Game::dimension() const {
+int32_t Game::dimension() const {
     return _dimension;
 }
 
-int Game::size() const {
+int32_t Game::size() const {
     return _dimension * _dimension;
 }
 
@@ -163,16 +163,16 @@ void Game::shuffle() {
     std::mt19937 rng {dev()};
     std::uniform_int_distribution<int> dist {0, 4};
 
-    int times {(size() + 1) * 4};
-    for (int i {0}; i < times; i++) {
+    int32_t times {(size() + 1) * 4};
+    for (int32_t i {0}; i < times; i++) {
         std::vector<Move> moves {validMoves()};
         move(moves[dist(rng) % moves.size()]);
     }
 }
 
 void Game::reset() {
-    int n = 1;
-    for (int i = 0; i < size() - 1; i++)
+    int32_t n = 1;
+    for (int32_t i = 0; i < size() - 1; i++)
         _board[i] = n++;
 
     _board[size() - 1] = 0;
@@ -181,17 +181,17 @@ void Game::reset() {
     _blankCol = _dimension - 1;
 }
 
-int Game::inversionCount() const {
-    int count = 0;
+int32_t Game::inversionCount() const {
+    int32_t count = 0;
 
-    int len = size();
-    int last {len - 1};
+    int32_t len = size();
+    int32_t last {len - 1};
 
-    for (int i {0}; i < last; i++) {
+    for (int32_t i {0}; i < last; i++) {
         if (_board[i] == 0)
             continue;
 
-        for (int j {i + 1}; j < len; j++) {
+        for (int32_t j {i + 1}; j < len; j++) {
             if (_board[j] == 0)
                 continue;
 
@@ -208,7 +208,7 @@ int Game::inversionCount() const {
 // odd  && inv even => solvable
 // odd  && inv odd => unsolvable
 bool Game::isSolvable() const {
-    int invCount = inversionCount();
+    int32_t invCount = inversionCount();
 
     if (_dimension % 2 == 0) {
         if (_blankRow % 2 == 0)
