@@ -1,6 +1,5 @@
 #include "Application.hh"
 
-#include <OpenGL/OpenGL.h>
 #include <glad/glad.h>
 
 #include <GLFW/glfw3.h>

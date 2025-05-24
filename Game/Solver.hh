@@ -3,6 +3,7 @@
 #include "Game.hh"
 #include "Heuristic.hh"
 #include <chrono>
+#include <deque>
 #include <vector>
 
 enum class SolverResult { OK, NOT_SOLVABLE, NO_SOLUTION_FOUND };

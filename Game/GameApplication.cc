@@ -19,7 +19,7 @@ bool NumButton(uint8_t n) {
     }
 
     auto strN = std::to_string(n);
-    auto result = ImGui::Button(n == 0 ? "" : strN.c_str(), ImVec2(50, 50));
+    auto result = ImGui::Button(n == 0 ? " " : strN.c_str(), ImVec2(50, 50));
 
     if (n == 0) {
         ImGui::PopStyleColor(3);
