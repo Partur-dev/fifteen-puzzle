@@ -209,7 +209,7 @@ void GameApplication::renderSolver() {
             ImGui::SameLine();
 
             if (ImGui::Button("Next")) {
-                if (_solverStep < static_cast<int>(_solver.path().size()) - 1) {
+                if (_solverStep < static_cast<uint32_t>(_solver.path().size()) - 1) {
                     _game = _solver.path()[++_solverStep];
                     _moves++;
                 }

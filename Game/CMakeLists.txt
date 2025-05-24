@@ -14,3 +14,9 @@ target_link_libraries(game
         glad imgui glm cgltf stb_image spdlog
 )
 
+
+target_compile_options(game PRIVATE
+    $<$<CXX_COMPILER_ID:MSVC>:/W4 /WX>
+    $<$<NOT:$<CXX_COMPILER_ID:MSVC>>:-Wall -Wextra -Werror>
+)
+

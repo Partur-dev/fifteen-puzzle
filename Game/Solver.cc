@@ -16,7 +16,7 @@ uint32_t Solver::search(
     }
 
     uint32_t cost = moveCost + h * weight;
-    if (cost > threshold) {
+    if (cost > static_cast<uint32_t>(threshold)) {
         return cost;
     }
 

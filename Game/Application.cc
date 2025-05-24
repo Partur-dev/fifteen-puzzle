@@ -8,7 +8,7 @@
 #include <imgui_impl_opengl3.h>
 #include <spdlog/spdlog.h>
 
-void Application::keyCallback(GLFWwindow* window, int32_t key, int32_t scancode, int32_t action, int32_t mods) {
+void Application::keyCallback(GLFWwindow* window, int32_t key, int32_t /*scancode*/, int32_t action, int32_t /*mods*/) {
     auto app = static_cast<Application*>(glfwGetWindowUserPointer(window));
     if (app) {
         app->keyPressed(key, action);
@@ -121,8 +121,8 @@ void Application::render(float dt) {
     glfwSwapBuffers(_windowHandle);
 }
 
-void Application::renderScene(float dt) {}
+void Application::renderScene(float /*dt*/) {}
 
-void Application::keyPressed(int32_t key, int32_t action) {}
+void Application::keyPressed(int32_t /*key*/, int32_t /*action*/) {}
 
-void Application::update(float dt) {}
+void Application::update(float /*dt*/) {}

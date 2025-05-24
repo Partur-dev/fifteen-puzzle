@@ -7,15 +7,15 @@ Game::Game() : _dimension(4), _board(4 * 4) {
 }
 
 Game::Game(const Game& p) :
-    _dimension(p._dimension),
     _blankRow(p._blankRow),
     _blankCol(p._blankCol),
+    _dimension(p._dimension),
     _board(p._board) {}
 
 Game::Game(Game&& p) :
-    _dimension(p._dimension),
     _blankRow(p._blankRow),
     _blankCol(p._blankCol),
+    _dimension(p._dimension),
     _board(std::move(p._board)) {}
 
 Game& Game::operator=(const Game& p) {
