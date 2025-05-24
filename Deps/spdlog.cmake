@@ -1,3 +1,5 @@
+set(SPDLOG_USE_STD_FORMAT ON CACHE BOOL "" FORCE)
+
 FetchContent_Declare(
     spdlog
     GIT_REPOSITORY https://github.com/gabime/spdlog.git

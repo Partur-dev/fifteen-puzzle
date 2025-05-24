@@ -1,6 +1,6 @@
 project(game)
 
-add_executable(game
+set(SOURCES
     Application.cc
     Game.cc
     GameApplication.cc
@@ -9,11 +9,20 @@ add_executable(game
     Solver.cc
 )
 
+if(WIN32)
+    add_executable(game WIN32
+        ${SOURCES}
+    )
+else()
+    add_executable(game
+        ${SOURCES}
+    )
+endif()
+
 target_link_libraries(game
     PRIVATE
         glad imgui glm cgltf stb_image spdlog
 )
-
 
 target_compile_options(game PRIVATE
     $<$<CXX_COMPILER_ID:MSVC>:/W4 /WX>
